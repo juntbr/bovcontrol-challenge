@@ -1,0 +1,30 @@
+{
+  "plugins": [
+    [
+      "babel-plugin-root-import",
+      {
+        "paths": [
+          {
+            "rootPathSuffix": "src",
+            "rootPathPrefix": "@/"
+          },
+          {
+            "rootPathSuffix": "jest",
+            "rootPathPrefix": "jest/"
+          }
+        ]
+      }
+    ],
+    [
+      "dotenv-import",
+      {
+        "moduleName": "@env",
+        "path": ".env",
+        "blocklist": null,
+        "allowlist": null,
+        "safe": false,
+        "allowUndefined": false
+      }
+    ]
+  ]
+}
