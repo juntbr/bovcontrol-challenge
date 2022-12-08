@@ -30,7 +30,8 @@ This is a challenge proposed by Bovcontrol
 │   ├── presentation/ui
 ├── node_modules
 ├── package.json
-├── package-lock.json
+├── yarn.lock
+├── .babelrc
 └── .gitignore
 ```
 
