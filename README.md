@@ -63,7 +63,6 @@ $ yarn
 $ yarn run ios / yarn run android
 
 # Por algum motivo a API está sem o CORS, por isso use CMD + D para entrar no modo de desenvolvimento
-$ yarn run ios / yarn run android
 
 ```
 
