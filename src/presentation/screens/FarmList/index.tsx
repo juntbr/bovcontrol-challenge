@@ -1,20 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {FarmModel} from '@/domain/models';
 import {LoadFarmList} from '@/domain/usecases';
-import {Spinner} from '@/presentation/components';
 import Header from '@/presentation/components/Header';
 import FarmCard from '@/presentation/components/FarmCard';
 import {useFocusEffect, useNavigation} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React from 'react';
 import {
   ButtonText,
   Container,
   Content,
   CreateButton,
   ButtonContainer,
+  SkeletonContainer,
 } from './styles';
 import {useAsyncStorage} from '@/presentation/context/async-storage-context';
 import {View} from 'react-native';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
 type FarmList = {
   loadFarmList?: LoadFarmList;
@@ -22,16 +23,20 @@ type FarmList = {
 
 const FarmListScreen: React.FC<FarmList> = () => {
   const {navigate} = useNavigation();
-  const {farmList, syncCreatedListWithRemote, syncEditedListWithRemote} =
-    useAsyncStorage();
+  const {
+    farmList,
+    syncCreatedListWithRemote,
+    syncEditedListWithRemote,
+    isLoading,
+  } = useAsyncStorage();
   // const handleError = useErrorHandler(error => setError(error));
-  const [loading] = useState(false);
   // const [setError] = useState<Error>(null as unknown as Error);
 
   // function renderError() {
   //   return <ErrorComponent message={error?.message} onPress={x => x} />;
   // }
 
+  console.log({isLoading});
   useFocusEffect(
     React.useCallback(() => {
       syncCreatedListWithRemote();
@@ -48,9 +53,47 @@ const FarmListScreen: React.FC<FarmList> = () => {
     });
   };
 
+  if (isLoading) {
+    return (
+      <Container>
+        <Header title="Fazendas" isGoBackAvaiable={false} />
+        <ButtonContainer>
+          <View />
+          <CreateButton
+            onPress={() => {
+              navigate('NewFarm');
+            }}>
+            <ButtonText>+</ButtonText>
+          </CreateButton>
+        </ButtonContainer>
+        <Content>
+          <SkeletonContainer>
+            <SkeletonPlaceholder borderRadius={4}>
+              <SkeletonPlaceholder.Item flexDirection="row" alignItems="center">
+                <SkeletonPlaceholder.Item
+                  width={40}
+                  marginLeft={8}
+                  height={40}
+                  borderRadius={40}
+                />
+                <SkeletonPlaceholder.Item marginLeft={16} marginTop={8}>
+                  <SkeletonPlaceholder.Item width={280} height={15} />
+                  <SkeletonPlaceholder.Item
+                    marginTop={8}
+                    width={280}
+                    height={15}
+                  />
+                </SkeletonPlaceholder.Item>
+              </SkeletonPlaceholder.Item>
+            </SkeletonPlaceholder>
+          </SkeletonContainer>
+        </Content>
+      </Container>
+    );
+  }
+
   return (
     <Container>
-      <Spinner visible={loading} />
       <Header title="Fazendas" isGoBackAvaiable={false} />
       <ButtonContainer>
         <View />

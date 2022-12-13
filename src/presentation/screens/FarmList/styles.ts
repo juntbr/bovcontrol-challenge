@@ -14,6 +14,16 @@ export const Content = styled.ScrollView.attrs({
   flex: 1;
   padding: 16px;
 `;
+export const SkeletonContainer = styled.TouchableOpacity`
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  background-color: #fff;
+  padding: 16px;
+  text-align: left;
+  margin-bottom: 16px;
+`;
 
 export const CreateButton = styled.TouchableOpacity`
   height: 40px;

@@ -19,6 +19,7 @@ interface ContextData {
   farmList: FarmModel[];
   syncEditedListWithRemote: () => void;
   syncCreatedListWithRemote: () => void;
+  isLoading: boolean;
 }
 
 export const AsyncStorageContext = createContext<ContextData>(
@@ -33,6 +34,7 @@ export const AsyncStorageProvider: React.FC<AsyncStorageProviderProps> = ({
   AsyncStorage,
 }) => {
   const [farmList, setFarmList] = useState<FarmModel[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     // AsyncStorage.clear('@checklists');
     // syncEditedListsWithRemote();
@@ -118,6 +120,8 @@ export const AsyncStorageProvider: React.FC<AsyncStorageProviderProps> = ({
       return;
     } catch (e) {
       console.error(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -174,6 +178,7 @@ export const AsyncStorageProvider: React.FC<AsyncStorageProviderProps> = ({
         syncEditedListWithRemote,
         syncCreatedListWithRemote,
         farmList,
+        isLoading,
       }}>
       {children}
     </AsyncStorageContext.Provider>
