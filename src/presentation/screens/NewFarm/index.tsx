@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable curly */
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
@@ -91,8 +92,6 @@ export const NewFarm: React.FC<RegisterProps> = () => {
               onChangeText={setFarmName}
               placeholder="Nome da Fazenda"
               marginBottom={16}
-              testID="email-input"
-              keyboardType="email-address"
               autoCapitalize="none"
               autoCorrect={false}
             />
@@ -105,8 +104,6 @@ export const NewFarm: React.FC<RegisterProps> = () => {
               onChangeText={setChecklistType}
               placeholder="Tipo do checklist"
               marginBottom={16}
-              testID="email-input"
-              keyboardType="email-address"
               autoCapitalize="none"
               autoCorrect={false}
             />
@@ -117,8 +114,6 @@ export const NewFarm: React.FC<RegisterProps> = () => {
               onChangeText={setCityFromFarm}
               placeholder="Cidade da Fazenda"
               marginBottom={16}
-              testID="email-input"
-              keyboardType="email-address"
               autoCapitalize="none"
               autoCorrect={false}
             />
@@ -130,7 +125,7 @@ export const NewFarm: React.FC<RegisterProps> = () => {
               placeholder="QTD de leite/mês"
               marginBottom={16}
               testID="email-input"
-              keyboardType="email-address"
+              keyboardType="numeric"
               autoCapitalize="none"
               autoCorrect={false}
             />
@@ -143,8 +138,6 @@ export const NewFarm: React.FC<RegisterProps> = () => {
               onChangeText={setHadSupervision}
               placeholder="Tipo do checklist"
               marginBottom={16}
-              testID="email-input"
-              keyboardType="email-address"
               autoCapitalize="none"
               autoCorrect={false}
             />

@@ -61,8 +61,6 @@ export const ModalContent: React.FC<ModalContentProps> = ({
           onChangeText={setCityFromFarm}
           placeholder="Cidade da Fazenda"
           marginBottom={16}
-          testID="email-input"
-          keyboardType="email-address"
           autoCapitalize="none"
           autoCorrect={false}
         />
@@ -71,8 +69,6 @@ export const ModalContent: React.FC<ModalContentProps> = ({
           onChangeText={setFarmName}
           placeholder="Nome da fazenda"
           marginBottom={16}
-          testID="email-input"
-          keyboardType="email-address"
           autoCapitalize="none"
           autoCorrect={false}
         />
@@ -94,8 +90,7 @@ export const ModalContent: React.FC<ModalContentProps> = ({
           onChangeText={text => handleOnlyNumbersInput(setMilkQuantity, text)}
           placeholder="QTD de leite/mês"
           marginBottom={16}
-          testID="email-input"
-          keyboardType="email-address"
+          keyboardType="number-pad"
           autoCapitalize="none"
           autoCorrect={false}
         />
@@ -104,8 +99,7 @@ export const ModalContent: React.FC<ModalContentProps> = ({
           onChangeText={text => handleOnlyNumbersInput(setCowQuantity, text)}
           placeholder="Quantidade de bois"
           marginBottom={16}
-          testID="email-input"
-          keyboardType="email-address"
+          keyboardType="number-pad"
           autoCapitalize="none"
           autoCorrect={false}
         />
