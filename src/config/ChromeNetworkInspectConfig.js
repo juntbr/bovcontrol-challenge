@@ -1,4 +1,4 @@
-export default function ChromeNetworkInspectConfig() {
+function ChromeNetworkInspectConfig() {
   global.XMLHttpRequest = global.originalXMLHttpRequest
     ? global.originalXMLHttpRequest
     : global.XMLHttpRequest;
@@ -44,3 +44,5 @@ export default function ChromeNetworkInspectConfig() {
       : global.FileReader;
   }
 }
+
+export {ChromeNetworkInspectConfig};
