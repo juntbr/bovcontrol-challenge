@@ -44,6 +44,8 @@ export const AsyncStorageProvider: React.FC<AsyncStorageProviderProps> = ({
     try {
       const oldCheckList = await AsyncStorage.get('@checklist');
       const localChecklist = await AsyncStorage.get('@createdChecklist');
+      if (!oldCheckList) return;
+
       if (!localChecklist) {
         await AsyncStorage.set('@createdChecklist', [value]);
         return await addNewChecklistIntoStorage(
@@ -68,7 +70,7 @@ export const AsyncStorageProvider: React.FC<AsyncStorageProviderProps> = ({
     }
   };
 
-  const initializaAsyncStorage = async (farmArray: FarmModel[]) => {
+  const initializeAsyncStorage = async (farmArray: FarmModel[]) => {
     await AsyncStorage.set('@checklist', farmArray);
     setFarmList(farmArray);
   };
@@ -110,7 +112,8 @@ export const AsyncStorageProvider: React.FC<AsyncStorageProviderProps> = ({
       }
       const farmListResponse = await loadFarmList.execute();
       if (farmListResponse) {
-        return initializaAsyncStorage(farmListResponse);
+        console.log('initializing');
+        return initializeAsyncStorage(farmListResponse);
       }
       return;
     } catch (e) {
@@ -121,7 +124,6 @@ export const AsyncStorageProvider: React.FC<AsyncStorageProviderProps> = ({
   const syncEditedListWithRemote = async () => {
     const localCheckList = await AsyncStorage.get('@checklist');
     const localUpdatedLists = await AsyncStorage.get('@updatedLists');
-    console.log({localUpdatedLists});
     if (!localUpdatedLists) return;
 
     const newSet = new Set(localUpdatedLists);
@@ -131,40 +133,18 @@ export const AsyncStorageProvider: React.FC<AsyncStorageProviderProps> = ({
       const editedFarm = localCheckList.filter(
         (farm: FarmModel) => farm._id == id,
       )[0] as FarmModel;
-      const editFarmFormat = {
-        type: editedFarm.type,
-        amount_of_milk_produced: parseInt(editedFarm.amount_of_milk_produced),
-        number_of_cows_head: parseInt(editedFarm.number_of_cows_head),
-        had_supervision: editedFarm.had_supervision,
-        farmer: {
-          name: editedFarm.farmer.name,
-          city: editedFarm.farmer.city,
-        },
-        from: {
-          name: editedFarm.from.name,
-        },
-        to: {
-          name: editedFarm.to.name,
-        },
-        location: {
-          latitude: -23.5,
-          longitude: -46.6,
-        },
-        created_at: editedFarm.created_at,
-        updated_at: editedFarm.updated_at,
-      };
-      console.log({editFarmFormat});
+      const editFarmFormat = formatFarmObject(editedFarm);
       try {
         await editFarmExistent.execute({id: id, checklist: editFarmFormat});
-        await AsyncStorage.clear('@updatedLists');
       } catch (e) {
         console.error(e);
+      } finally {
+        AsyncStorage.clear('@updatedLists');
       }
     });
   };
   const syncCreatedListWithRemote = async () => {
     const localChecklist = await AsyncStorage.get('@createdChecklist');
-    console.log({localChecklist});
 
     if (!localChecklist) return;
 
@@ -178,10 +158,10 @@ export const AsyncStorageProvider: React.FC<AsyncStorageProviderProps> = ({
 
     try {
       await newFarmCreation.execute({checklists: formatedChecklist});
-      await AsyncStorage.clear('@createdChecklist');
-      console.log(newCheckList);
     } catch (e) {
       console.error(e);
+    } finally {
+      AsyncStorage.clear('@createdChecklist');
     }
   };
 
@@ -208,8 +188,7 @@ async function addNewChecklistIntoStorage(
 ) {
   const newCheckList = oldCheckList.concat(value);
   await AsyncStorage.set('@checklist', newCheckList);
-  setFarmList(newCheckList);
-  return newCheckList;
+  return setFarmList(newCheckList);
 }
 
 function addEditedListToLocalStorage(
