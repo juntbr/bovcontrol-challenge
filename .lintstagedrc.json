@@ -1,6 +1,6 @@
 {
   "*.{js,jsx,ts,tsx}": [
-    "yarn lint",
+    "yarn lint --fix",
     "git add"
   ]
 }
