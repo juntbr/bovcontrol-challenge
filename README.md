@@ -34,7 +34,9 @@ This is a challenge proposed by Bovcontrol
 ├── .babelrc
 └── .gitignore
 ```
+<!-- Arquitetura Remote-Local!-->
 
+<img width="1246" alt="Screen Shot 2022-12-13 at 15 59 56" src="https://user-images.githubusercontent.com/22377025/207421773-18a45a5d-0c39-4246-ba53-b7af7328783e.png">
 
 ## Starting to project
 
