@@ -2,16 +2,11 @@
 /* eslint-disable curly */
 import {FarmModel} from '@/domain/models';
 import React, {createContext, useContext, useEffect, useState} from 'react';
-import {
-  makeRemoteLoadFarmList,
-  makeRemoteNewFarmCreation,
-  makeRemoteEditFarmExistent,
-} from '@/main/factories/usecases';
-import {Storage} from '@/data/protocols/cache/storage';
 
-const loadFarmList = makeRemoteLoadFarmList();
-const newFarmCreation = makeRemoteNewFarmCreation();
-const editFarmExistent = makeRemoteEditFarmExistent();
+import {Storage} from '@/data/protocols/cache/storage';
+import {LoadFarmList, NewFarmCreation} from '@/domain/usecases';
+import {RemoteEditFarm} from '@/data/usecases';
+
 interface ContextData {
   getDataFromAsyncStorage: () => void;
   saveDataToAsyncStorage: (value: any) => void;
@@ -27,11 +22,17 @@ export const AsyncStorageContext = createContext<ContextData>(
 );
 interface AsyncStorageProviderProps {
   AsyncStorage: Storage;
+  loadFarmList: LoadFarmList;
+  newFarmCreation: NewFarmCreation;
+  editFarmExistent: RemoteEditFarm;
 }
 
 export const AsyncStorageProvider: React.FC<AsyncStorageProviderProps> = ({
   children,
   AsyncStorage,
+  loadFarmList,
+  editFarmExistent,
+  newFarmCreation,
 }) => {
   const [farmList, setFarmList] = useState<FarmModel[]>([]);
   const [isLoading, setIsLoading] = useState(true);
