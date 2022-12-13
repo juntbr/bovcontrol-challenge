@@ -1,8 +1,9 @@
 import {RemoteEditFarm} from '@/data/usecases';
 import {makeAxiosHttpClient} from '@/main/factories/http/axios-http-client-factory';
+import config from '@/../.env.json';
 
 export const makeRemoteEditFarmExistent = (): RemoteEditFarm => {
-  const url = 'http://challenge-front-end.bovcontrol.com/v1/checkList';
+  const url = config.API_URL;
   const axiosHttpClient = makeAxiosHttpClient();
   return new RemoteEditFarm(url, axiosHttpClient);
 };
