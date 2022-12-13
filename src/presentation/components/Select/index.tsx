@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {TextInputProps, View} from 'react-native';
+import React from 'react';
+import {TextInputProps} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
-import {Container, TextInput} from './styles';
+import {Container} from './styles';
 
 interface InputProps extends Omit<TextInputProps, 'placeholderTextColor'> {
   error?: boolean;
@@ -13,7 +13,6 @@ interface InputProps extends Omit<TextInputProps, 'placeholderTextColor'> {
 
 export const Select: React.FC<InputProps> = ({
   options = [],
-  error = false,
   value,
   onChangeText,
 }) => {
@@ -28,11 +27,9 @@ export const Select: React.FC<InputProps> = ({
         }}
         itemStyle={{height: 94, backgroundColor: 'transparent'}}
         mode="dropdown"
-        onValueChange={(itemValue: number) => onChangeText(itemValue)}>
+        onValueChange={(itemValue: any) => onChangeText(itemValue)}>
         {options &&
-          options.map((option, index) => (
-            <Picker.Item label={option} value={option} />
-          ))}
+          options.map(option => <Picker.Item label={option} value={option} />)}
       </Picker>
     </Container>
   );

@@ -1,11 +1,8 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import {FarmModel} from '@/domain/models';
 import {LoadFarmList} from '@/domain/usecases';
 import {Spinner} from '@/presentation/components';
-import ErrorComponent from '@/presentation/components/ErrorComponent';
 import Header from '@/presentation/components/Header';
 import FarmCard from '@/presentation/components/FarmCard';
-import {useErrorHandler} from '@/presentation/hooks/useErrorHandler';
 import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
@@ -25,13 +22,13 @@ type FarmList = {
 const FarmListScreen: React.FC<FarmList> = () => {
   const {navigate} = useNavigation();
   const {farmList} = useAsyncStorage();
-  const handleError = useErrorHandler(error => setError(error));
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error>(null as unknown as Error);
+  // const handleError = useErrorHandler(error => setError(error));
+  const [loading] = useState(false);
+  // const [setError] = useState<Error>(null as unknown as Error);
 
-  function renderError() {
-    return <ErrorComponent message={error?.message} onPress={x => x} />;
-  }
+  // function renderError() {
+  //   return <ErrorComponent message={error?.message} onPress={x => x} />;
+  // }
 
   const handleFarmPress = (farm: FarmModel) => {
     //@ts-ignore

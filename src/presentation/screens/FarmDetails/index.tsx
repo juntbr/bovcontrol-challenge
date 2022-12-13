@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable curly */
 import React, {useState} from 'react';
 import {ErrorMessage, Button} from '@/presentation/components';
 import Header from '@/presentation/components/Header';
@@ -14,7 +12,7 @@ import {
   Subtitle,
   ContentContainer,
 } from './styles';
-import {ScrollView, Modal, View} from 'react-native';
+import {ScrollView, Modal} from 'react-native';
 import {ModalContent} from './ModalContent';
 import {FarmModel} from '@/domain/models';
 import {returnDateFormated} from '@/presentation/utils/returnDateFormated';

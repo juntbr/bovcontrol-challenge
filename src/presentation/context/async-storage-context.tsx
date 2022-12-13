@@ -51,7 +51,18 @@ export const AsyncStorageProvider: React.FC<AsyncStorageProviderProps> = ({
 
   const editDataFromAsyncStorage = async (farmId: String, editedData: any) => {
     try {
-      const localCheckList = await AsyncStorage.get('@checklist');
+      const localCheckList = JSON.parse(await AsyncStorage.get('@checklist'));
+      const localUpdatedLists = await AsyncStorage.get('@updatedLists');
+      if (localUpdatedLists) {
+        const localUpdatedListsParsed = JSON.parse(localUpdatedLists);
+        localUpdatedListsParsed.push(farmId);
+        await AsyncStorage.set(
+          '@updatedLists',
+          JSON.stringify(localUpdatedLists),
+        );
+      }
+      const localUpdatedListes = await AsyncStorage.get('@updatedLists');
+      console.log({localUpdatedListes});
       if (localCheckList) {
         const localCheckListParsed = localCheckList;
         const newCheckList = localCheckListParsed?.map((farm: FarmModel) => {
@@ -61,6 +72,7 @@ export const AsyncStorageProvider: React.FC<AsyncStorageProviderProps> = ({
         // setOfflineUpdates(offlineUpdates.push(farmId));
         const newCheckListParsed = JSON.stringify(newCheckList);
         setFarmList(newCheckList);
+
         return AsyncStorage.set('@checklist', newCheckListParsed);
       }
     } catch (e) {
@@ -72,7 +84,7 @@ export const AsyncStorageProvider: React.FC<AsyncStorageProviderProps> = ({
     try {
       const value = await AsyncStorage.get('@checklist');
       if (value) {
-        const checkListFromAsyncStorage = value;
+        const checkListFromAsyncStorage = JSON.parse(value);
         return setFarmList(checkListFromAsyncStorage);
       }
       const farmListResponse = await loadFarmList.execute();

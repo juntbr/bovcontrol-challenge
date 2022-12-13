@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable curly */
 import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
