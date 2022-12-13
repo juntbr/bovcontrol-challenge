@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {FarmModel} from '@/domain/models';
 import {LoadFarmList} from '@/domain/usecases';
 import {Spinner} from '@/presentation/components';
 import Header from '@/presentation/components/Header';
 import FarmCard from '@/presentation/components/FarmCard';
-import {useNavigation} from '@react-navigation/native';
+import {useFocusEffect, useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {
   ButtonText,
@@ -21,7 +22,8 @@ type FarmList = {
 
 const FarmListScreen: React.FC<FarmList> = () => {
   const {navigate} = useNavigation();
-  const {farmList} = useAsyncStorage();
+  const {farmList, syncCreatedListWithRemote, syncEditedListWithRemote} =
+    useAsyncStorage();
   // const handleError = useErrorHandler(error => setError(error));
   const [loading] = useState(false);
   // const [setError] = useState<Error>(null as unknown as Error);
@@ -29,6 +31,15 @@ const FarmListScreen: React.FC<FarmList> = () => {
   // function renderError() {
   //   return <ErrorComponent message={error?.message} onPress={x => x} />;
   // }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      syncCreatedListWithRemote();
+      syncEditedListWithRemote();
+
+      return () => {};
+    }, []),
+  );
 
   const handleFarmPress = (farm: FarmModel) => {
     //@ts-ignore
