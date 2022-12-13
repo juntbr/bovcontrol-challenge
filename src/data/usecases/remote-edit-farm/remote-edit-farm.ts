@@ -1,5 +1,5 @@
 import {HttpClient, HttpStatusCode} from '@/data/protocols/http';
-import {EmailInUseError, UnexpectedError} from '@/domain/errors';
+import {UnexpectedError} from '@/domain/errors';
 import {
   EditFarmExistent,
   EditFarmParams,
@@ -10,9 +10,10 @@ export class RemoteEditFarm implements EditFarmExistent {
     private readonly url: string,
     private readonly httpClient: HttpClient<void>,
   ) {}
-  async execute(id: EditFarmParams): Promise<any> {
+  async execute(params: EditFarmParams): Promise<any> {
     const response = await this.httpClient.request({
-      url: `${this.url}/${id}`,
+      url: `${this.url}/${params.id}`,
+      body: params.checklist,
       method: 'put',
     });
 
@@ -20,7 +21,7 @@ export class RemoteEditFarm implements EditFarmExistent {
       case HttpStatusCode.success:
         return response.body;
       case HttpStatusCode.forbidden:
-        throw new EmailInUseError();
+        throw new UnexpectedError();
       default:
         throw new UnexpectedError();
     }
