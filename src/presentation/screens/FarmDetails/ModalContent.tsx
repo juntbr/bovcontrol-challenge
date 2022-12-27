@@ -77,8 +77,6 @@ export const ModalContent: React.FC<ModalContentProps> = ({
           onChangeText={setFarmerName}
           placeholder="Nome do fazendeiro"
           marginBottom={16}
-          testID="email-input"
-          keyboardType="email-address"
           autoCapitalize="none"
           autoCorrect={false}
         />

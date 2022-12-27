@@ -17,6 +17,7 @@ export const Container = styled.View<ContainerProps>`
     error &&
     css`
       border: 1px solid red;
+      border-bottom-color: red;
     `}
 `;
 
