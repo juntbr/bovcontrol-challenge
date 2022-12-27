@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {ErrorMessage, Button} from '@/presentation/components';
 import Header from '@/presentation/components/Header';
-import {Validation} from '@/presentation/protocols/validation';
 import {NewFarmCreation} from '@/domain/usecases/new-farm-creation';
 import {
   Container,
@@ -17,19 +16,22 @@ import {ModalContent} from './ModalContent';
 import {FarmModel} from '@/domain/models';
 import {returnDateFormated} from '@/presentation/utils/returnDateFormated';
 
-type RegisterProps = {
-  validation: Validation;
-  newfarmcreation: NewFarmCreation;
+type FarmDetailsProps = {
+  validation: any;
+  newfarmcreation?: NewFarmCreation;
   route: {params: {farm: FarmModel}};
 };
 
 const HAD_SUPERVISION_TRUE_TEXT = 'SIM';
 const HAD_SUPERVISION_FALSE_TEXT = 'NÃO';
 
-export const FarmDetails: React.FC<RegisterProps> = ({route}) => {
+export const FarmDetails: React.FC<FarmDetailsProps> = ({
+  route,
+  validation,
+}) => {
   const [error] = useState<string | undefined>();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const {farm} = route.params;
+  const {farm} = route?.params;
   const HAD_SUPERVISION_TEXT = farm.had_supervision
     ? HAD_SUPERVISION_TRUE_TEXT
     : HAD_SUPERVISION_FALSE_TEXT;
@@ -40,10 +42,9 @@ export const FarmDetails: React.FC<RegisterProps> = ({route}) => {
     setIsModalOpen(!isModalOpen);
   };
 
+  console.log({validation});
   return (
-    <Container
-      testID="register-container"
-      style={{opacity: opacityFromContainer}}>
+    <Container style={{opacity: opacityFromContainer}}>
       <Header title="Detalhes da sua fazenda" isGoBackAvaiable />
       <ScrollView>
         <ScrollContainer>
@@ -105,7 +106,11 @@ export const FarmDetails: React.FC<RegisterProps> = ({route}) => {
         transparent={true}
         visible={isModalOpen}
         onRequestClose={handleIsModalOpen}>
-        <ModalContent farm={farm} handleIsModalOpen={handleIsModalOpen} />
+        <ModalContent
+          farm={farm}
+          handleIsModalOpen={handleIsModalOpen}
+          validation={validation}
+        />
       </Modal>
     </Container>
   );

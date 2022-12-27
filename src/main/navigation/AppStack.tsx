@@ -3,8 +3,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
   FarmListScreenFactory,
   MakeNewFarmScreen,
+  MakeFarmDetailsScreen,
 } from '@/main/factories/screens';
-import {FarmDetails} from '@/presentation/screens/FarmDetails';
 
 const {Navigator, Screen} = createNativeStackNavigator();
 
@@ -16,7 +16,7 @@ export const AppStack: React.FC = () => {
       }}>
       <Screen name="FarmList" component={FarmListScreenFactory} />
       <Screen name="NewFarm" component={MakeNewFarmScreen} />
-      <Screen name="FarmDetails" component={FarmDetails} />
+      <Screen name="FarmDetails" component={MakeFarmDetailsScreen} />
     </Navigator>
   );
 };

@@ -6,6 +6,7 @@ export const makeNewFarmValidation = (): Composite => {
     ...Builder.field('farmerName').required().min(1).build(),
     ...Builder.field('cityFromFarm').required().min(1).build(),
     ...Builder.field('milkQuantity').required().min(1).build(),
+    ...Builder.field('cowQuantity').required().min(1).build(),
     ...Builder.field('farmName').required().min(1).build(),
   ]);
 };
